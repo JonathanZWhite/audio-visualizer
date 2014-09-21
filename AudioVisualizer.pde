@@ -1,5 +1,8 @@
+import controlP5.*;
+
 Visualizer visualizer;
 ControlPanel controlPanel;
+ControlP5 cp5;
 
 int controlPanelWidth;
 int windowHeight;
@@ -7,16 +10,17 @@ int windowWidth;
 int visualizerWidth;
 
 void setup() {
+  cp5 = new ControlP5(this);
+  
   windowHeight = displayHeight;
   windowWidth = displayWidth;
   controlPanelWidth = displayWidth / 4;
   visualizerWidth = (displayWidth - controlPanelWidth);
-
-  System.out.println(visualizerWidth);
-
+  
   size(displayWidth, displayHeight);
 
-  controlPanel = new ControlPanel(windowHeight, windowWidth, controlPanelWidth);
+
+  controlPanel = new ControlPanel(windowHeight, windowWidth, controlPanelWidth, cp5);
   visualizer = new Visualizer(windowHeight, windowWidth, visualizerWidth);
 }
 
@@ -32,7 +36,8 @@ void draw() {
  * Mouse input
  */
 void mousePressed() {
-  visualizer.mouseClicked();
+  visualizer.mouseClick();
+  controlPanel.mouseClick();
 }
 
 /**

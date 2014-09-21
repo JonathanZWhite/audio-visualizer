@@ -54,7 +54,7 @@ public class Visualizer {
   /**
    * Mouse input
    */
-  public void mouseClicked() {
+  public void mouseClick() {
     // TODO - check within();
     background(random(0, 255), random(0, 255), random(0, 255));
   }
