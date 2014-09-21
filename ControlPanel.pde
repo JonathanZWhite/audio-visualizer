@@ -63,7 +63,8 @@ public class ControlPanel {
         .setLabelPadding(20, 20)
         .addItem("Reverb", 0)
         .addItem("Pulse", 1)
-        .addItem("Sunrise", 2);
+        .addItem("Sunrise", 2)
+        .addItem("Radial", 3);
   }
 
   public void draw() {
@@ -107,7 +108,6 @@ public class ControlPanel {
     float frequencyMagnitude = cp5.get(Slider.class, " ").getValue();
     float visualizationIndex = cp5.get(RadioButton.class, "radioButton").getValue();
     visualizer.update(amplitudeMagnitude, frequencyMagnitude, visualizationIndex);
-    
-    System.out.println(visualizationIndex);
+   
   }
 }

@@ -26,9 +26,15 @@ public class Visualizer {
   int windowHeight;
   int windowWidth;
   int visualizerWidth;
+  int time;
+  int wait = 100;
 
   float[] angle;
   float[] y, x;
+  
+  int color1 = 0;
+  int color2 = 255;
+  int color3 = 255;
 
   public Visualizer(int windowHeight, int windowWidth, int visualizerWidth) {
     this.windowHeight = windowHeight;
@@ -36,9 +42,10 @@ public class Visualizer {
     this.visualizerWidth = visualizerWidth;
 
     minim = new Minim(this);
-
+    
     input = minim.getLineIn(Minim.STEREO, 512);
     fft = new FFT(input.bufferSize(), input.sampleRate());
+    time = millis(); // Current time
   }
 
   /**
@@ -48,17 +55,21 @@ public class Visualizer {
     fft.forward(input.mix);
     noStroke();
 
-//    radial();
-
     switch(visualizationIndex) {
       case 0: 
+        fill(0, 0, 0);
         reverb();
         break;
-      case 1: 
+      case 1:
+     fill(0, 0, 0); 
         pulse();
         break;
       case 2:
         sunrise();
+        break;
+      case 3:
+      fill(0, 0, 0);
+        radial();
         break;
       default:
         reverb();
@@ -70,7 +81,7 @@ public class Visualizer {
     fill(0, 0, 0, 10);
     rect(0, 0, visualizerWidth, height);
     
-    // Declarations
+    // Declarations & Instantiations
     adjustedAmplitudeMagnitude = amplitudeMagnitude * 5000; // Max 5000
     adjustedFrequencyMagnitude = frequencyMagnitude * 100; // Max 50
     
@@ -90,7 +101,7 @@ public class Visualizer {
     fill(0, 0, 0, 10);
     rect(0, 0, visualizerWidth, height);
      
-    // Declarations
+    // Declarations & Instantiations
     int margin = 80;
     int startingDivisor = 5;
     
@@ -111,7 +122,7 @@ public class Visualizer {
     fill(0, 0, 0);
     rect(0, 0, visualizerWidth, height);
 
-    // Declarations
+    // Declarations & Instantiations
     int barCount = 100;
     int margin = 20;
     
@@ -125,48 +136,58 @@ public class Visualizer {
       int test = (int) (fft.getBand(i) * 100);
       System.out.println((int) (fft.getBand(i) * 100));
       rect(margin * i, 0, 10, abs(input.mix.get(i) * adjustedAmplitudeMagnitude));
-      // TODO code cleanup
       // TODO if above index, set to new color
     }
   }
   
   private void radial() {
-    background(0);
-    frameRate(50);
+    fill(0, 0, 0, 5); // 5?
+    rect(0, 0, visualizerWidth, height);
 
-    // Declarations
+
+    // Declarations & Instantiations    
+    float circleCount = 80;
+    float centerPosX = visualizerWidth/2;
+    float centerPosY = height/2;
+    
+    float diameter =  visualizerWidth * .04;       
+    float radius  = diameter/2;                    
+    float circ =  PI * diameter;                  
+    float smallDiameter = (circ / circleCount);   
+    
+    float angle, x, y;
+    
     adjustedAmplitudeMagnitude = amplitudeMagnitude * 1000; // Max 5000
     adjustedFrequencyMagnitude = frequencyMagnitude * 25; // Max 50
     amplitude = (input.mix.get(1) * adjustedAmplitudeMagnitude);
     frequency = (fft.getBand(1) * adjustedFrequencyMagnitude);
     
-    float circleCount = 80;
+    fill(color1, color2, color3);
     
-    float centerPosX = visualizerWidth/2;
-    float centerPosY = height/2;
+    // Fill Change Over Time
+    if(millis() - time >= wait) {
+      color1 += 10;
+      color2 -= 5;
       
-    float diameter =  visualizerWidth * .04;       // large circle's diameter
-    float radius  = diameter/2;                    // large circle's radius
-    float circ =  PI * diameter;                   // large circumference
-    float smallDiameter = (circ / circleCount);    // small circle's diameter
+      // Resets
+      if(color1 >= 255) { color1 = 0; }
+      if(color2 <= 0) { color2 = 255; }
+      if(color3 <= 0) { color3 = 255; }
+      
+      time = millis(); // Updates time
+
+    }
     
+    // Visualization
     for(int i = 1; i <= circleCount; ++i) {
-      float angle = i * TWO_PI / circleCount;
-      float x = centerPosX + cos(angle) * radius * amplitude;
-      float y = centerPosY + sin(angle) * radius * amplitude;
-      
-      fill(random(50, 100), random(200, 250), random(200, 250));
-      
-      if(frameCount % 20 == 0) {
-        System.out.println("Changed");
-        fill(random((i * 3.1) - 2, i * 3.1), random((i * 2.1) - 2, i * 3.0), random((i * 2) - 2, i * 1.2));
-      }
-      
-      // TODO, change the color scheme over time
+      angle = i * TWO_PI / circleCount;
+      x = centerPosX + cos(angle) * radius * amplitude;
+      y = centerPosY + sin(angle) * radius * amplitude;
       
       ellipse(x, y, smallDiameter * frequency, smallDiameter * frequency);
     }
     
+    // TODO, abstract out color changer?
     // TODO, add rotation?
   }
   
