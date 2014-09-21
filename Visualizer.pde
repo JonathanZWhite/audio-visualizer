@@ -17,11 +17,18 @@ public class Visualizer {
 
   float amplitudeMagnitude = 0.4; // Default 
   float frequencyMagnitude = 0.5; // Default
-
+  float adjustedAmplitudeMagnitude;
+  float adjustedFrequencyMagnitude;
+  float amplitude;
+  float frequency;
+  
   int visualizationIndex = 0; // Default
   int windowHeight;
   int windowWidth;
   int visualizerWidth;
+
+  float[] angle;
+  float[] y, x;
 
   public Visualizer(int windowHeight, int windowWidth, int visualizerWidth) {
     this.windowHeight = windowHeight;
@@ -39,9 +46,9 @@ public class Visualizer {
    */
   public void draw() {
     fft.forward(input.mix);
-
     noStroke();
-    smooth();
+
+//    radial();
 
     switch(visualizationIndex) {
       case 0: 
@@ -64,15 +71,15 @@ public class Visualizer {
     rect(0, 0, visualizerWidth, height);
     
     // Declarations
-    float adjustedAmplitudeMagnitude = amplitudeMagnitude * 5000; // Max 5000
-    float adjustedFrequencyMagnitude = frequencyMagnitude * 100; // Max 50
+    adjustedAmplitudeMagnitude = amplitudeMagnitude * 5000; // Max 5000
+    adjustedFrequencyMagnitude = frequencyMagnitude * 100; // Max 50
     
     // Visualization
     for (int i = 0; i < 3; i++) {
       fill(random(0, 255), random(0, 255), random(0, 255));
 
-      float amplitude = (input.mix.get(1) * adjustedAmplitudeMagnitude);
-      float frequency = (fft.getBand(1) * adjustedFrequencyMagnitude);
+      amplitude = (input.mix.get(1) * adjustedAmplitudeMagnitude);
+      frequency = (fft.getBand(1) * adjustedFrequencyMagnitude);
 
       ellipse(random(i, width), (height / 2) - amplitude, frequency, frequency);
     }
@@ -87,8 +94,8 @@ public class Visualizer {
     int margin = 80;
     int startingDivisor = 5;
     
-    float adjustedAmplitudeMagnitude = amplitudeMagnitude * 400; // Max 400
-    float adjustedFrequencyMagnitude = frequencyMagnitude * 200; // Max 200
+    adjustedAmplitudeMagnitude = amplitudeMagnitude * 800; // Max 400
+    adjustedFrequencyMagnitude = frequencyMagnitude * 400; // Max 400
      
     // Visualization
     for(int i = 0; i < fft.specSize(); i++){
@@ -108,8 +115,8 @@ public class Visualizer {
     int barCount = 100;
     int margin = 20;
     
-    float adjustedAmplitudeMagnitude = amplitudeMagnitude * 4000; // Max 4000
-    float adjustedFrequencyMagnitude = frequencyMagnitude * 200; // Max 200
+    adjustedAmplitudeMagnitude = amplitudeMagnitude * 4000; // Max 4000
+    adjustedFrequencyMagnitude = frequencyMagnitude * 200; // Max 200
     
     // Visualization
     for (int i = 0; i < 100; i++) {
@@ -122,13 +129,56 @@ public class Visualizer {
       // TODO if above index, set to new color
     }
   }
+  
+  private void radial() {
+    background(0);
+    frameRate(50);
+
+    // Declarations
+    adjustedAmplitudeMagnitude = amplitudeMagnitude * 1000; // Max 5000
+    adjustedFrequencyMagnitude = frequencyMagnitude * 25; // Max 50
+    amplitude = (input.mix.get(1) * adjustedAmplitudeMagnitude);
+    frequency = (fft.getBand(1) * adjustedFrequencyMagnitude);
+    
+    float circleCount = 80;
+    
+    float centerPosX = visualizerWidth/2;
+    float centerPosY = height/2;
+      
+    float diameter =  visualizerWidth * .04;       // large circle's diameter
+    float radius  = diameter/2;                    // large circle's radius
+    float circ =  PI * diameter;                   // large circumference
+    float smallDiameter = (circ / circleCount);    // small circle's diameter
+    
+    for(int i = 1; i <= circleCount; ++i) {
+      float angle = i * TWO_PI / circleCount;
+      float x = centerPosX + cos(angle) * radius * amplitude;
+      float y = centerPosY + sin(angle) * radius * amplitude;
+      
+      fill(random(50, 100), random(200, 250), random(200, 250));
+      
+      if(frameCount % 20 == 0) {
+        System.out.println("Changed");
+        fill(random((i * 3.1) - 2, i * 3.1), random((i * 2.1) - 2, i * 3.0), random((i * 2) - 2, i * 1.2));
+      }
+      
+      // TODO, change the color scheme over time
+      
+      ellipse(x, y, smallDiameter * frequency, smallDiameter * frequency);
+    }
+    
+    // TODO, add rotation?
+  }
+  
 
   /**
    * Mouse input
    */
   public void mouseClick() {
     // TODO - check within();
+    // TODO - Fill depends on color?
     // TODO - set default values for each new selection
+    // TODO - chan
     //    background(random(0, 255), random(0, 255), random(0, 255));
   }
 
