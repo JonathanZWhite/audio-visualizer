@@ -14,6 +14,9 @@ public class Visualizer {
   Minim minim;
   AudioInput input;
   FFT fft;
+  
+  float amplitudeMagnitude;
+  
   int windowHeight;
   int windowWidth;
   int visualizerWidth;
@@ -57,5 +60,10 @@ public class Visualizer {
   public void mouseClick() {
     // TODO - check within();
     background(random(0, 255), random(0, 255), random(0, 255));
+  }
+  
+  public void update(float amplitudeMagnitude) {
+    this.amplitudeMagnitude = amplitudeMagnitude;
+    System.out.println(this.amplitudeMagnitude);
   }
 }

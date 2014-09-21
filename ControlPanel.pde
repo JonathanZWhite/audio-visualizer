@@ -1,5 +1,7 @@
 public class ControlPanel {
   ControlP5 cp5;
+  Visualizer visualizer;
+  
   int windowHeight;
   int windowWidth;
   int controlPanelWidth;
@@ -7,10 +9,12 @@ public class ControlPanel {
   
   color inputColor = color(35,35,35);
   
-  float amplitudeMagnifier;
+  float[] userInput = new float[3];
 
-  public ControlPanel(int windowHeight, int windowWidth, int controlPanelWidth, ControlP5 cp5) { 
+  public ControlPanel(Visualizer visualizer, int windowHeight, int windowWidth, int controlPanelWidth, ControlP5 cp5) { 
+    this.visualizer = visualizer;
     this.cp5 = cp5;
+    
     this.windowHeight = windowHeight;
     this.windowWidth = windowWidth;
     this.controlPanelWidth = controlPanelWidth;
@@ -59,6 +63,6 @@ public class ControlPanel {
  
   public void mouseClick() {
     // TODO: Create submit button
-    amplitudeMagnifier = Float.parseFloat(cp5.get(Textfield.class, "").getText());
+    visualizer.update(Float.parseFloat(cp5.get(Textfield.class, "").getText()));
   }
 }

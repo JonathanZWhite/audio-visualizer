@@ -19,9 +19,8 @@ void setup() {
   
   size(displayWidth, displayHeight);
 
-
-  controlPanel = new ControlPanel(windowHeight, windowWidth, controlPanelWidth, cp5);
   visualizer = new Visualizer(windowHeight, windowWidth, visualizerWidth);
+  controlPanel = new ControlPanel(visualizer, windowHeight, windowWidth, controlPanelWidth, cp5);
 }
 
 /**
