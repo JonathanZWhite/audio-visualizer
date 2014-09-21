@@ -6,8 +6,10 @@ public class ControlPanel {
   int windowWidth;
   int controlPanelWidth;
   int controlPanelPosX;
+  int elementsPosX;
   
-  color inputColor = color(35,35,35);
+  color sliderColor = color(35,35,35);
+  color highlight = color(0,151,244);
   
   float[] userInput = new float[3];
 
@@ -19,23 +21,21 @@ public class ControlPanel {
     this.windowWidth = windowWidth;
     this.controlPanelWidth = controlPanelWidth;
 
-    int inputPosX = this.windowWidth - 70; // Margin 30 + 40 (width)
     controlPanelPosX = this.windowWidth - this.controlPanelWidth;
+    elementsPosX = controlPanelPosX + 30;
     
-    // Text field
-    cp5.addTextfield("")
-      .setPosition(inputPosX, 103)
-      .setFont(createFont("arial", 16))
-      .setSize(40, 40)
-      .setFocus(true)
-      .setColor(color(255, 255, 255))
-      .setColorBackground(inputColor)
-      .setText("0.4")
-      .setAutoClear(false);
+    // Sliders: reference denoted by spaces to hide label and show value
+    cp5.addSlider("")
+      .setColorForeground(highlight)
+      .setColorActive(highlight)
+      .setColorBackground(sliderColor)
+      .setPosition(controlPanelPosX + 30, 160)
+      .setRange(0, 1)
+      .setWidth(controlPanelWidth - 60) // 2x margin
+      .setValue(0.40); // Default
   }
 
   public void draw() {
-    int textPosX = controlPanelPosX + 30;
     
     // Background
     fill(49, 49, 49);
@@ -55,14 +55,14 @@ public class ControlPanel {
     textSize(16);
     fill(206, 206, 206);
     
-    text("Amplitude Magnifier", textPosX, 120); 
+    text("Amplitude Magnifier", elementsPosX, 120); 
     textSize(12);
-    text("Change the amplitude of the particles", textPosX, 140);
+    text("Change the amplitude of the particles", elementsPosX, 140);
    
   }
  
   public void mouseClick() {
-    // TODO: Create submit button
-    visualizer.update(Float.parseFloat(cp5.get(Textfield.class, "").getText()));
+    float amplitudeMagnitude = cp5.get(Slider.class, "").getValue();
+    visualizer.update(amplitudeMagnitude);
   }
 }

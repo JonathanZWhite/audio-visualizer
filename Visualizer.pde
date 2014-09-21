@@ -15,7 +15,7 @@ public class Visualizer {
   AudioInput input;
   FFT fft;
   
-  float amplitudeMagnitude;
+  float amplitudeMagnitude = 1000; // Default 
   
   int windowHeight;
   int windowWidth;
@@ -27,9 +27,10 @@ public class Visualizer {
     this.visualizerWidth = visualizerWidth;
 
     minim = new Minim(this);
-
+  
     input = minim.getLineIn(Minim.STEREO, 512);
     fft = new FFT(input.bufferSize(), input.sampleRate());
+    
   }
 
   /**
@@ -47,7 +48,7 @@ public class Visualizer {
     for (int i = 0; i < 3; i++) {
       fill(random(0, 255), random(0, 255), random(0, 255));
       
-      float amplitude = (input.mix.get(1) * 1000);
+      float amplitude = (input.mix.get(1) * amplitudeMagnitude);
       float frequency = (fft.getBand(1) * 30);
 
       ellipse(random(i, width), (height / 2) - amplitude, frequency, frequency);
@@ -63,7 +64,7 @@ public class Visualizer {
   }
   
   public void update(float amplitudeMagnitude) {
-    this.amplitudeMagnitude = amplitudeMagnitude;
+    this.amplitudeMagnitude = 2000 * amplitudeMagnitude; // Scale by 2000
     System.out.println(this.amplitudeMagnitude);
   }
 }
