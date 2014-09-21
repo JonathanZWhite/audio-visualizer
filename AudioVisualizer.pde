@@ -10,13 +10,13 @@ void setup() {
   windowHeight = displayHeight;
   windowWidth = displayWidth;
   controlPanelWidth = displayWidth / 4;
-  visualizerWidth = (displayWidth - controlPanelWidth) / 2;
+  visualizerWidth = (displayWidth - controlPanelWidth);
 
   System.out.println(visualizerWidth);
 
   size(displayWidth, displayHeight);
 
-  controlPanel = new ControlPanel(controlPanelWidth);
+  controlPanel = new ControlPanel(windowHeight, windowWidth, controlPanelWidth);
   visualizer = new Visualizer(windowHeight, windowWidth, visualizerWidth);
 }
 
@@ -25,6 +25,7 @@ void setup() {
  */
 void draw() {
   visualizer.draw();
+  controlPanel.draw();
 }
 
 /**

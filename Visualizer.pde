@@ -37,15 +37,13 @@ public class Visualizer {
 
     noStroke();
 
-    fill(255, 255, 255, 10);
-    rect(0, 0, visualizerWidth, height);
-
+    // Config background
     fill(0, 0, 0, 10);
-    rect(visualizerWidth, 0, visualizerWidth, height);
-
-    fill(random(0, 255), random(0, 255), random(0, 255));
-    // Draw random ellipse
+    rect(0, 0, visualizerWidth, height);
+    
     for (int i = 0; i < 3; i++) {
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      
       float amplitude = (input.mix.get(1) * 1000);
       float frequency = (fft.getBand(1) * 30);
 
@@ -57,6 +55,7 @@ public class Visualizer {
    * Mouse input
    */
   public void mouseClicked() {
+    // TODO - check within();
     background(random(0, 255), random(0, 255), random(0, 255));
   }
 }
