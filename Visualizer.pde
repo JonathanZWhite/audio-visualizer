@@ -105,8 +105,8 @@ public class Visualizer {
     int margin = 80;
     int startingDivisor = 5;
     
-    adjustedAmplitudeMagnitude = amplitudeMagnitude * 800; // Max 400
-    adjustedFrequencyMagnitude = frequencyMagnitude * 400; // Max 400
+    adjustedAmplitudeMagnitude = amplitudeMagnitude * 800; // Max 800
+    adjustedFrequencyMagnitude = frequencyMagnitude * 800; // Max 800
      
     // Visualization
     for(int i = 0; i < fft.specSize(); i++){
@@ -134,16 +134,14 @@ public class Visualizer {
       // x, y, width, height
       fill(255, 127.5 + i, 255 - (2.5 * i), random(150, 200));
       int test = (int) (fft.getBand(i) * 100);
-      System.out.println((int) (fft.getBand(i) * 100));
       rect(margin * i, 0, 10, abs(input.mix.get(i) * adjustedAmplitudeMagnitude));
       // TODO if above index, set to new color
     }
   }
   
   private void radial() {
-    fill(0, 0, 0, 5); // 5?
+    fill(0, 0, 0, 10); // 5?
     rect(0, 0, visualizerWidth, height);
-
 
     // Declarations & Instantiations    
     float circleCount = 80;
@@ -175,7 +173,6 @@ public class Visualizer {
       if(color3 <= 0) { color3 = 255; }
       
       time = millis(); // Updates time
-
     }
     
     // Visualization
@@ -186,9 +183,6 @@ public class Visualizer {
       
       ellipse(x, y, smallDiameter * frequency, smallDiameter * frequency);
     }
-    
-    // TODO, abstract out color changer?
-    // TODO, add rotation?
   }
   
 

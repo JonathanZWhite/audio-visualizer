@@ -7,11 +7,10 @@ public class ControlPanel {
   int controlPanelWidth;
   int controlPanelPosX;
   int elementsPosX;
+  int buttonWidth;
   
   color dimColor = color(35,35,35);
-  color highlight = color(0,151,244);
-  
-  float[] userInput = new float[3];
+  color highlightColor = color(0,151,244);
 
   public ControlPanel(Visualizer visualizer, int windowHeight, int windowWidth, int controlPanelWidth, ControlP5 cp5) { 
     this.visualizer = visualizer;
@@ -23,6 +22,7 @@ public class ControlPanel {
 
     controlPanelPosX = this.windowWidth - this.controlPanelWidth;
     elementsPosX = controlPanelPosX + 30;
+    buttonWidth = (controlPanelWidth - 75) / 2; // Half of element width - margin(15)
     
     /* Sliders: reference denoted by spaces to hide label and show value */
     
@@ -30,8 +30,8 @@ public class ControlPanel {
     
     // AmplitudeMagnitude
     cp5.addSlider("") 
-      .setColorForeground(highlight)
-      .setColorActive(highlight)
+      .setColorForeground(highlightColor)
+      .setColorActive(highlightColor)
       .setColorBackground(dimColor)
       .setHeight(10)
       .setPosition(controlPanelPosX + 30, 160)
@@ -41,8 +41,8 @@ public class ControlPanel {
       
     // FrequencyMagnitude
     cp5.addSlider(" ") 
-      .setColorActive(highlight)
-      .setColorForeground(highlight)
+      .setColorActive(highlightColor)
+      .setColorForeground(highlightColor)
       .setColorBackground(dimColor)
       .setHeight(10)
       .setPosition(controlPanelPosX + 30, 255)
@@ -56,7 +56,7 @@ public class ControlPanel {
         .setColorBackground(dimColor)
         .setPosition(elementsPosX, 350)
         .setColorForeground(#2B2B2B)
-        .setColorActive(highlight)
+        .setColorActive(highlightColor)
         .setSize(25, 25)
         .setItemsPerRow(1)
         .setSpacingRow(10)
@@ -65,8 +65,38 @@ public class ControlPanel {
         .addItem("Pulse", 1)
         .addItem("Sunrise", 2)
         .addItem("Radial", 3);
+    
+    // Buttons
+    Button pause = cp5.addButton("pause");
+    pause
+      .activateBy(ControlP5.RELEASE)
+      .setLabel("Pause")
+      .setColorActive(highlightColor)
+      .setColorBackground(highlightColor)
+      .setColorForeground(highlightColor)
+      .setPosition(elementsPosX, windowHeight - 130) // 60(margin) - 40(height)
+      .setSize(buttonWidth, 40)
+      .setValue(128);
+    Button reset = cp5.addButton("reset"); 
+    reset
+      .activateBy(ControlP5.RELEASE)
+      .setLabel("Reset")
+      .setColorActive(highlightColor)
+      .setColorBackground(highlightColor)
+      .setColorForeground(highlightColor)
+      .setPosition(elementsPosX + buttonWidth + 15, windowHeight - 130) // 60(margin) - 40(height)
+      .setSize(buttonWidth, 40)
+      .setValue(128);
+      
+    // Button style
+    Label pauseLabel = pause.captionLabel();
+    pauseLabel.align(CENTER, CENTER);
+    
+    Label resetLabel = reset.captionLabel();
+    resetLabel.align(CENTER, CENTER);
   }
-
+  
+  
   public void draw() {
     
     // Background
@@ -102,12 +132,12 @@ public class ControlPanel {
     text("Visualize music", elementsPosX, 330);
    
   }
- 
-  public void mouseClick() {
+
+  /* Updates values without needing refresh */
+  public void mouseEvent() {
     float amplitudeMagnitude = cp5.get(Slider.class, "").getValue();
     float frequencyMagnitude = cp5.get(Slider.class, " ").getValue();
     float visualizationIndex = cp5.get(RadioButton.class, "radioButton").getValue();
     visualizer.update(amplitudeMagnitude, frequencyMagnitude, visualizationIndex);
-   
   }
 }
