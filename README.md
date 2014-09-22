@@ -19,3 +19,6 @@ In order to run this program in a processing environment, please download the Co
 #Screenshots
 ![Alt text](screenshots/usability_testing_1.png)
 ![Alt text](screenshots/usability_testing_2.png)
+
+#Troubleshooting
+- If you the visualization is not working in the demo for PC users, try switching to either the 32 or 64 versions.
