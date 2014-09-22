@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class sketch_140921l extends PApplet {
+public class sketch_140922b extends PApplet {
 
 
 
@@ -94,21 +94,21 @@ public void stop() {
 public class ControlPanel {
   ControlP5 cp5;
   Visualizer visualizer;
-  
+
   int windowHeight;
   int windowWidth;
   int controlPanelWidth;
   int controlPanelPosX;
   int elementsPosX;
   int buttonWidth;
-  
+
   int dimColor = color(35,35,35);
   int highlightColor = color(0,151,244);
 
-  public ControlPanel(Visualizer visualizer, int windowHeight, int windowWidth, int controlPanelWidth, ControlP5 cp5) { 
+  public ControlPanel(Visualizer visualizer, int windowHeight, int windowWidth, int controlPanelWidth, ControlP5 cp5) {
     this.visualizer = visualizer;
     this.cp5 = cp5;
-    
+
     this.windowHeight = windowHeight;
     this.windowWidth = windowWidth;
     this.controlPanelWidth = controlPanelWidth;
@@ -116,11 +116,11 @@ public class ControlPanel {
     controlPanelPosX = this.windowWidth - this.controlPanelWidth;
     elementsPosX = controlPanelPosX + 30;
     buttonWidth = (controlPanelWidth - 75) / 2; // Half of element width - margin(15)
-    
+
     /* Sliders: reference denoted by spaces to hide label and show value */
-    
+
     cp5.setControlFont(createFont("Arial", 10));
-    
+
     // AmplitudeMagnitude
     cp5.addSlider("amplitude")
     .setLabel("")
@@ -132,9 +132,9 @@ public class ControlPanel {
       .setRange(0, 1)
       .setWidth(controlPanelWidth - 60) // 2x margin
       .setValue(0.40f); // Default
-      
+
     // FrequencyMagnitude
-    cp5.addSlider("frequency") 
+    cp5.addSlider("frequency")
       .setLabel("")
       .setColorActive(highlightColor)
       .setColorForeground(highlightColor)
@@ -144,7 +144,7 @@ public class ControlPanel {
       .setRange(0, 1)
       .setWidth(controlPanelWidth - 60) // 2x margin
       .setValue(0.50f); // Default
-     
+
     // Visualization
     RadioButton radioButton = cp5.addRadioButton("radioButton");
     radioButton
@@ -161,7 +161,7 @@ public class ControlPanel {
         .addItem("Sunrise", 2)
         .addItem("Radial", 3)
         .activate(0);
-    
+
     // Buttons
     Button pause = cp5.addButton("pause");
     pause
@@ -173,7 +173,7 @@ public class ControlPanel {
       .setPosition(elementsPosX, windowHeight - 130) // 60(margin) - 40(height)
       .setSize(buttonWidth, 40)
       .setValue(128);
-    Button reset = cp5.addButton("reset"); 
+    Button reset = cp5.addButton("reset");
     reset
       .activateBy(ControlP5.RELEASE)
       .setLabel("Reset")
@@ -183,55 +183,59 @@ public class ControlPanel {
       .setPosition(elementsPosX + buttonWidth + 15, windowHeight - 130) // 60(margin) - 40(height)
       .setSize(buttonWidth, 40)
       .setValue(128);
-      
+
     // Button style
     Label pauseLabel = pause.captionLabel();
     pauseLabel.align(CENTER, CENTER);
-    
+
     Label resetLabel = reset.captionLabel();
     resetLabel.align(CENTER, CENTER);
   }
-  
-  
+
+
   public void draw() {
-    
+
     // Background
     fill(49, 49, 49);
     rect(controlPanelPosX, 0, controlPanelWidth, windowHeight);
-    
+
     /* Text (margin: 60, 30) */
-    
+
     // Title
     textAlign(CENTER);
     textSize(24);
     fill(255, 255, 255);
-    
+
     text("Config Panel", controlPanelPosX + (controlPanelWidth/2), 60);
-    
-    // Subhead 
+
+    // Subhead
     textAlign(LEFT);
     fill(206, 206, 206);
-    
+
     textSize(16);
-    text("Amplitude Magnifier", elementsPosX, 120); 
+    text("Amplitude Magnifier", elementsPosX, 120);
     textSize(12);
     text("Magnify the amplitude of the audio", elementsPosX, 140);
-    
+
     textSize(16);
-    text("Frequency Magnifier", elementsPosX, 215); 
+    text("Frequency Magnifier", elementsPosX, 215);
     textSize(12);
     text("Magnify the frequency of the audio", elementsPosX, 235);
-    
+
     textSize(16);
-    text("Visualization Selector", elementsPosX, 310); 
+    text("Visualization Selector", elementsPosX, 310);
     textSize(12);
     text("Visualize music", elementsPosX, 330);
-    
+
     textSize(16);
-    text("Instructions", elementsPosX, 530); 
+    text("Instructions", elementsPosX, 530);
     textSize(12);
-    text("Try whistling, clapping, or playing some music!", elementsPosX, 550);
-   
+    text("- Try whistling or clapping into your microphone", elementsPosX, 550);
+    text("- Try playing some music", elementsPosX, 570);
+    text("- Try adding your own input along with the music", elementsPosX, 590);
+    text("- Create visualizations that remixes the music with", elementsPosX, 610);
+    text("   your own input", elementsPosX, 625);
+
   }
 
   /* Updates values without needing refresh */
@@ -436,7 +440,7 @@ public class Visualizer {
 }
 
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "sketch_140921l" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "sketch_140922b" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
