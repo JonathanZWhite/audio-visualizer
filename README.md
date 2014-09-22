@@ -3,6 +3,9 @@ audio-visualizer
 
 Processing program for visualizing music and sounds
 
+#Github Repo
+https://github.com/JonathanZWhite/audio-visualizer.git
+
 #Installation
 `$ git clone https://github.com/JonathanZWhite/audio-visualizer.git`
 
