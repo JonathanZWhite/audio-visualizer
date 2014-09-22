@@ -15,3 +15,4 @@ In order to run this program in a processing environment, please download the Co
 
 #Screenshots
 ![Alt text](usability_testing_1.png)
+![Alt text](usability_testing_2.png)
