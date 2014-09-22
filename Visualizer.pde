@@ -135,7 +135,6 @@ public class Visualizer {
       fill(255, 127.5 + i, 255 - (2.5 * i), random(150, 200));
       int test = (int) (fft.getBand(i) * 100);
       rect(margin * i, 0, 10, abs(input.mix.get(i) * adjustedAmplitudeMagnitude));
-      // TODO if above index, set to new color
     }
   }
   
@@ -183,18 +182,6 @@ public class Visualizer {
       
       ellipse(x, y, smallDiameter * frequency, smallDiameter * frequency);
     }
-  }
-  
-
-  /**
-   * Mouse input
-   */
-  public void mouseClick() {
-    // TODO - check within();
-    // TODO - Fill depends on color?
-    // TODO - set default values for each new selection
-    // TODO - chan
-    //    background(random(0, 255), random(0, 255), random(0, 255));
   }
 
   public void update(float amplitudeMagnitude, float frequencyMagnitude, float visualizationIndex) {

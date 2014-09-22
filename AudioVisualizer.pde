@@ -64,9 +64,6 @@ void mouseReleased() {
   controlPanel.mouseEvent();
 }
 
-// TODO: Pause button();
-// TODO: Reset with setup();
-
 /**
  * Stops program flow
  */
