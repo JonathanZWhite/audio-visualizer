@@ -14,4 +14,4 @@ In order to run this program in a processing environment, please download the Co
 [ControlP5 Library - ControlP5 is a library written by Andreas Schlegel for the programming environment processing.](http://www.sojamo.de/libraries/controlP5/)
 
 #Screenshots
-![Alt text](/usability_testing_1.jpg?raw=true)
+![Alt text](usability_testing_1.png)
