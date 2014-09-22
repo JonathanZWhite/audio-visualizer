@@ -34,8 +34,10 @@ void setup() {
       if(event.getController().name() == "pause" && event.getAction() == 1) {
         go = !go;
         cp5.controller("pause").setCaptionLabel(go ? "Pause" : "Unpause");
+        System.out.println(go);
       } else if (event.getController().name() == "reset" && event.getAction() == 1) {
-        setup();
+        cp5.controller("amplitude").setValue(0.40);
+        cp5.controller("frequency").setValue(0.50);
       }
     }
   });
@@ -49,7 +51,7 @@ void draw() {
     visualizer.draw();
     controlPanel.draw();
   } else {
-    println("Program paused!");
+ 
   }
 
 }

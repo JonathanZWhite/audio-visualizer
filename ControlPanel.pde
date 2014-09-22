@@ -29,7 +29,8 @@ public class ControlPanel {
     cp5.setControlFont(createFont("Arial", 10));
     
     // AmplitudeMagnitude
-    cp5.addSlider("") 
+    cp5.addSlider("amplitude")
+    .setLabel("")
       .setColorForeground(highlightColor)
       .setColorActive(highlightColor)
       .setColorBackground(dimColor)
@@ -40,7 +41,8 @@ public class ControlPanel {
       .setValue(0.40); // Default
       
     // FrequencyMagnitude
-    cp5.addSlider(" ") 
+    cp5.addSlider("frequency") 
+      .setLabel("")
       .setColorActive(highlightColor)
       .setColorForeground(highlightColor)
       .setColorBackground(dimColor)
@@ -64,7 +66,8 @@ public class ControlPanel {
         .addItem("Reverb", 0)
         .addItem("Pulse", 1)
         .addItem("Sunrise", 2)
-        .addItem("Radial", 3);
+        .addItem("Radial", 3)
+        .activate(0);
     
     // Buttons
     Button pause = cp5.addButton("pause");
@@ -130,13 +133,18 @@ public class ControlPanel {
     text("Visualization Selector", elementsPosX, 310); 
     textSize(12);
     text("Visualize music", elementsPosX, 330);
+    
+    textSize(16);
+    text("Instructions", elementsPosX, 530); 
+    textSize(12);
+    text("Try whistling, clapping, or playing some music!", elementsPosX, 550);
    
   }
 
   /* Updates values without needing refresh */
   public void mouseEvent() {
-    float amplitudeMagnitude = cp5.get(Slider.class, "").getValue();
-    float frequencyMagnitude = cp5.get(Slider.class, " ").getValue();
+    float amplitudeMagnitude = cp5.get(Slider.class, "amplitude").getValue();
+    float frequencyMagnitude = cp5.get(Slider.class, "frequency").getValue();
     float visualizationIndex = cp5.get(RadioButton.class, "radioButton").getValue();
     visualizer.update(amplitudeMagnitude, frequencyMagnitude, visualizationIndex);
   }
